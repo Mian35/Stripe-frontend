@@ -1,0 +1,130 @@
+import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { baseUrl } from '../utils/Base';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Loader from '../utils/Loader';
+
+const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Add state for password visibility
+  const navigate = useNavigate();
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    password: Yup.string()
+      .min(8, 'Password must be at least 8 characters long')
+      .required('Password is required'),
+  });
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      setIsLoading(true);
+
+      const response = await axios.post(`${baseUrl}/auth/login`, values, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        toast.success("User Logged in Successfully");
+        console.log(response.data.data.user)
+        localStorage.setItem('token', response.data.token);
+        navigate('/plans')
+        
+        
+      } else {
+        console.error('Login failed');
+      }
+      if(await response.data.data.user.plan === 'none'){
+        navigate('/plans');
+      }else{
+
+        navigate('/add')
+        }
+    } catch (error) {
+      toast.error("Invalid Credentials");
+      console.error('Error logging in:', error);
+    } finally {
+      setIsLoading(false);
+      setSubmitting(false);
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <div className='min-h-screen flex items-center justify-center'>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting, errors, touched }) => (
+          <Form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/2 mx-auto'>
+            <div className='mb-4'>
+              <label htmlFor='email' className='block text-gray-700 text-sm font-bold mb-2'>
+                Email:
+              </label>
+              <Field
+                type='text'
+                id='email'
+                name='email'
+                className={`w-full border border-solid border-gray-300 p-2 ${
+                  errors.email && touched.email ? 'border-red-500' : ''
+                }`}
+              />
+              <ErrorMessage name='email' component='div' className='text-red-500 text-xs italic' />
+            </div>
+            <div className='mb-6'>
+              <label htmlFor='password' className='block text-gray-700 text-sm font-bold mb-2'>
+                Password:
+              </label>
+              <div className="relative">
+                <Field
+                  type={showPassword ? 'text' : 'password'}
+                  id='password'
+                  name='password'
+                  className={`w-full border border-solid border-gray-300 p-2 ${
+                    errors.password && touched.password ? 'border-red-500' : ''
+                  }`}
+                />
+                <span
+                  className="absolute top-0 right-0 p-2 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}
+                </span>
+              </div>
+              <ErrorMessage name='password' component='div' className='text-red-500 text-xs italic' />
+            </div>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <div>
+                <button
+                  type='submit'
+                  className='text-white w-20 bg-black  hover:text-slate-300 p-3  mb-5 font-bold'
+                  disabled={isSubmitting}
+                >
+                  Login
+                </button>
+              </div>
+            )}
+            <p className='text-center mt-4'>
+              New User? Please <Link to='/register' className='font-bold'>Register</Link> to continue.
+            </p>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+};
+
+export default Login;
