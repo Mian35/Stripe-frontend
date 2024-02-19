@@ -34,7 +34,13 @@ const Login = () => {
         toast.success("User Logged in Successfully");
         console.log(response.data.data.user)
         localStorage.setItem('token', response.data.token);
-        navigate('/plans')
+        navigate('/plans');
+        if(response.data === null){
+        setTimeout(()=>{
+    
+          location.reload()
+          },2000)
+        }
         
         
       } else {

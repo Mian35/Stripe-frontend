@@ -50,7 +50,7 @@ const AddHeading = () => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post(`http://54.148.203.36/api/run_detections`, formData, {
+      const response = await axios.post(`https://one00-classes-detection-middle-man.onrender.com/process_video`, formData, {
         responseType: 'arraybuffer', // Set the response type to arraybuffer to handle binary data
       });
 
