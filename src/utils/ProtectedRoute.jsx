@@ -44,7 +44,7 @@ const ProtectedRoute = () => {
    
    return <Navigate to="/" />;
   }
-  
+  console.log("problem is here")
 return <Outlet/>
   // If there is a token, render the protected route
   
