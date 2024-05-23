@@ -39,7 +39,10 @@ const AddHeading = () => {
   const handleCheckboxChange = () => {
     setRectangle(!rectangle);
   };
-
+const apiClient = axios.create({
+  baseURL: 'http://3.15.206.170',
+  timeout: '300000'
+})
   const handleSubmit = async (values, { setSubmitting }) => {
     const formData = new FormData();
     formData.append('video', values.video);
@@ -50,7 +53,7 @@ const AddHeading = () => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post(`http://54.148.203.36/api/run_detections`, formData, {
+     const response = await apiClient.post( '/api/run_detections', formData, {
         responseType: 'arraybuffer', // Set the response type to arraybuffer to handle binary data
       });
 
