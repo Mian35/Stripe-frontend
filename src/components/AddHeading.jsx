@@ -41,7 +41,7 @@ const AddHeading = () => {
   };
 const apiClient = axios.create({
   baseURL: 'http://3.15.206.170',
-  timeout: '300000'
+  timeout: '3600000'
 })
   const handleSubmit = async (values, { setSubmitting }) => {
     const formData = new FormData();
