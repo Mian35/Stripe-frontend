@@ -21,7 +21,7 @@ import OutlinedCard from './components/Plans';
 function App() {
   return (
     <BrowserRouter>
-    <Sidenav/>
+    
     <Routes>
       <Route path="/" element={<Login />} errorElement={<Error/>}/>
       <Route path="/register" element={<Register />} />

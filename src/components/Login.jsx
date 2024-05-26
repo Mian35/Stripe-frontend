@@ -66,14 +66,19 @@ const Login = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center'>
+    <div className='bg-gradient-to-r from-gray-500 via-gray-300 to-black min-h-screen items-center justify-center'>
+
+      <div className='w-screen items-center mx-auto text-center justify-center pt-10'>
+      <img className='mx-auto w-[127px] h-[156px]' src="../public/logo.png" alt="" />
+      </div>
+
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, errors, touched }) => (
-          <Form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/2 mx-auto'>
+          <Form className='rounded-xl w-80 px-8 pt-6 pb-8 mt-5 mx-auto'>
             <div className='mb-4'>
               <label htmlFor='email' className='block text-gray-700 text-sm font-bold mb-2'>
                 Email:
