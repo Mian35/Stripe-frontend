@@ -80,21 +80,21 @@ const Login = () => {
         {({ isSubmitting, errors, touched }) => (
           <Form className='rounded-xl w-80 px-8 pt-6 pb-8 mt-5 mx-auto'>
             <div className='mb-4'>
-              <label htmlFor='email' className='block text-gray-700 text-sm font-bold mb-2'>
+              <label htmlFor='email' className='block text-white text-sm font-bold mb-2'>
                 Email:
               </label>
               <Field
                 type='text'
                 id='email'
                 name='email'
-                className={`w-full border border-solid border-gray-300 p-2 ${
+                className={`w-full  rounded-xl border border-solid border-gray-300 p-2 ${
                   errors.email && touched.email ? 'border-red-500' : ''
                 }`}
               />
-              <ErrorMessage name='email' component='div' className='text-red-500 text-xs italic' />
+              <ErrorMessage name='email' component='div' className='text-black text-xs italic' />
             </div>
             <div className='mb-6'>
-              <label htmlFor='password' className='block text-gray-700 text-sm font-bold mb-2'>
+              <label htmlFor='password' className='block text-white text-sm font-bold mb-2'>
                 Password:
               </label>
               <div className="relative">
@@ -102,18 +102,18 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   id='password'
                   name='password'
-                  className={`w-full border border-solid border-gray-300 p-2 ${
+                  className={`w-full  rounded-xl border border-solid border-gray-300 p-2 ${
                     errors.password && touched.password ? 'border-red-500' : ''
                   }`}
                 />
                 <span
-                  className="absolute top-0 right-0 p-2 cursor-pointer"
+                  className="absolute top-0 right-0 p-2 cursor-pointer text-slate-500"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                 </span>
               </div>
-              <ErrorMessage name='password' component='div' className='text-red-500 text-xs italic' />
+              <ErrorMessage name='password' component='div' className='text-black text-xs italic' />
             </div>
             {isLoading ? (
               <Loader />
@@ -121,14 +121,14 @@ const Login = () => {
               <div>
                 <button
                   type='submit'
-                  className='text-white w-20 bg-black  hover:text-slate-300 p-3  mb-5 font-bold'
+                  className='w-[150px] h-[43px] bg-white rounded-xl ml-12 text-black hover:text-slate-300 p-3  mb-5 font-bold'
                   disabled={isSubmitting}
                 >
-                  Login
+                  Sign In
                 </button>
               </div>
             )}
-            <p className='text-center mt-4'>
+            <p className='text-center mt-4 text-white'>
               New User? Please <Link to='/register' className='font-bold'>Register</Link> to continue.
             </p>
           </Form>
